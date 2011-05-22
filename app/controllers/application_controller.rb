@@ -81,9 +81,10 @@ class ApplicationController < ActionController::Base
   #----------------#
   # approval_check #
   #----------------#
+  # ユーザステータス承認チェック
   def approval_check
     # 除外コントローラ
-    except_controller = [ "member", "profiles", "user_skills", "entry" ]
+    except_controller = [ "member", "profiles", "user_skills", "entry", "ranking" ]
     
     if except_controller.index( params[:controller] ).blank?
       unless Profile.status_approval_ok?( session[:user_id], t("user.status_ok") )
