@@ -25,9 +25,9 @@ class EntryController < ApplicationController
 
     if User.count == 0
       @user.level = "master"
-      approval_status = "承認済"
+      approval_status = t("user.status_ok")
     else
-      approval_status = "未承認"
+      approval_status = t("user.status_no")
     end
 
     if @user.save
