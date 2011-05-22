@@ -1,0 +1,55 @@
+
+<%# ラウンジ %>
+<% form_for :lounge, :url => { :action => "post" } do |f| %>
+<table>
+  <tr>
+    <%# ポスト %>
+    <td style="white-space: nowrap;" colspan="4">
+      <%= f.text_field :message, :class => "input_field_width_500" %>
+      <%= f.submit t("lounge.post"), :disable_with => t("lounge.post") %>
+    </td>
+  </tr>
+
+  <%# ページング %>
+  <% if !@lounges.blank? and @lounges.total_pages > 1 %>
+  <tr>
+    <td style="white-space: nowrap;" colspan="4">
+      <%= will_paginate @lounges, :previous_label => 'Prev', :next_label => 'Next', :params => { :action => "index" } %>
+      <br />
+    </td>
+  </tr>
+  <% end %>
+
+  <% @lounges.each do |lounge| %>
+  <tr class="top_line">
+    <%# アイコン %>
+    <td style="width: 30px;">
+      <%= link_to image_tag( lounge.user.icon, :size => t("user.profile_size"), :alt => t("user.icon_alt"), :title => lounge.user.nickname ), { :controller => "profiles", :action => "show", :user_id => lounge.user.id }, :target => "_blank" unless lounge.user.blank? %>
+    </td>
+
+    <%# ラウンジメッセージ %>
+    <td><%=h lounge.message %></td>
+    
+    <%# ポスト時刻 %>
+    <td align="right" style="white-space: nowrap;" title="<%=h lounge.created_at.strftime("%Y/%m/%d %H:%M") %>"><%=h lounge.created_at.strftime("%m/%d %H:%M") %></td>
+    
+    <%# 削除ボタン %>
+    <td style="width: 30px;" class="menu"><%= link_to t("menu.delete"), { :action => "destroy", :id => lounge.id }, :confirm => '本当に削除してよろしいですか？', :method => :post if lounge.user_id == session[:user_id] %></td>
+  </tr>
+  <% end %>
+
+  <%# ページング %>
+  <% if !@lounges.blank? and @lounges.total_pages > 1 %>
+  <tr>
+    <td style="white-space: nowrap;" colspan="4">
+      <%= will_paginate @lounges, :previous_label => 'Prev', :next_label => 'Next', :params => { :action => "index" } %>
+      <br />
+    </td>
+  </tr>
+  <% end %>
+  
+  <tr class="top_line">
+    <td colspan="4"></td>
+  </tr>
+</table>
+<% end %>

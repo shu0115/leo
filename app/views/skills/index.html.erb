@@ -1,0 +1,33 @@
+
+<% form_for :skill, :url => { :action => "create" } do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label t("skill.name") %>：<%= f.text_field :name, :class => "input_field_width_200" %>
+    <%= f.submit t("menu.create"), :disable_with => t("menu.create") %>
+  </p>
+<% end %>
+
+<br />
+
+<%# ページング %>
+<%= will_paginate @skills, :previous_label => 'Prev', :next_label => 'Next', :params => { :action => "index" } %><br />
+
+<table>
+  <tr>
+    <th><%= t("skill.name") %></th>
+  </tr>
+
+<% @skills.each do |skill| %>
+  <tr>
+    <td><%=h skill.name %></td>
+    <td class="menu"><%= link_to t("menu.edit"), { :action => "edit", :id => skill.id } %></td>
+    <td class="menu"><% if session[:user_id] == skill.user_id %><%= link_to t("menu.delete"), { :action => "destroy", :id => skill.id }, :confirm => '本当に削除してよろしいですか？', :method => :delete %><% end %></td>
+  </tr>
+<% end %>
+</table>
+
+<%# ページング %>
+<%= will_paginate @skills, :previous_label => 'Prev', :next_label => 'Next', :params => { :action => "index" } %><br />
+
+<br />

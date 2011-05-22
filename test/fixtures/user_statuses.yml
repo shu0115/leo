@@ -1,0 +1,13 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  user_id: 1
+  point: 1
+  status: MyString
+  approval_user_id: 1
+
+two:
+  user_id: 1
+  point: 1
+  status: MyString
+  approval_user_id: 1

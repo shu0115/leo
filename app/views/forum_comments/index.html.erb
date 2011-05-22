@@ -1,0 +1,64 @@
+
+<%# メニュー %>
+<span class="menu">
+  <%= link_to t("menu.list"), { :controller => "forums" } %>
+  <%= link_to t("menu.new"), { :action => "new", :forum_id => @forum.id } %>
+</span>
+
+<br />
+<br />
+
+<%# フォーラム情報 %>
+<table>
+  <tr>
+    <%# フォーラムタイトル %>
+    <th colspan="2"><%= @forum.title %></td>
+  </tr>
+  
+  <tr>
+    <%# フォーラムユーザアイコン %>
+    <td class="icon"><%= link_to image_tag( @forum_user.icon, :size => t("user.profile_size"), :alt => t("user.icon_alt"), :title => @forum_user.nickname ), { :controller => "profiles", :action => "show", :user_id => @forum_user.id }, :target => "_blank" unless @forum_user.blank? %></td>
+    
+    <%# フォーラムコンテンツ %>
+    <td align="left" rowspan="2"><%= @forum.contents %></td>
+  </tr>
+</table>
+
+<br />
+
+<%# ページング %>
+<%= will_paginate @forum_comments, :previous_label => 'Prev', :next_label => 'Next', :params => { :action => "index" } %>
+<%= "<br />" if !@forum_comments.blank? and @forum_comments.total_pages > 1 %>
+
+<%# フォーラムコメント %>
+<% @forum_comments.each_with_index do |forum_comment, index| %>
+  <table>
+    <tr>
+      <td class="icon"><%= link_to image_tag( forum_comment.user.icon, :size => t("user.profile_size"), :alt => t("user.icon_alt"), :title => forum_comment.user.nickname ), { :controller => "profiles", :action => "show", :user_id => forum_comment.user.id }, :target => "_blank" unless forum_comment.user.blank? %></td>
+      <td align="left"><%=h forum_comment.comment %></td>
+    </tr>
+  
+    <% if session[:user_id] == forum_comment.user_id %>
+    <tr>
+      <td align="left" colspan="2" class="menu">
+        <%= link_to t("menu.edit"), { :action => "edit", :id => forum_comment.id } %>
+        <%= link_to t("menu.delete"), { :action => "destroy", :id => forum_comment.id }, :confirm => '本当に削除してよろしいですか？' %>
+      </td>
+    </tr>
+    <% end %>
+  </table>
+
+  <%= "<br />" unless @forum_comments.length == ( index + 1 ) %>
+<% end %>
+
+<%# ページング %>
+<%= will_paginate @forum_comments, :previous_label => 'Prev', :next_label => 'Next', :params => { :action => "index" } %>
+<%= "<br />" if !@forum_comments.blank? and @forum_comments.total_pages > 1 %>
+
+<br />
+
+<%# メニュー %>
+<span class="menu">
+  <%= link_to t("menu.list"), { :controller => "forums" } %>
+  <%= link_to t("menu.new"), { :action => "new", :forum_id => @forum.id } %>
+</span>

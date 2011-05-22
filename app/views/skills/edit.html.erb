@@ -1,0 +1,16 @@
+
+<% form_for :skill, :url => { :action => "update", :id => @skill.id } do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label t("skill.name") %>：<%= f.text_field :name, :class => "input_field_width_200" %>
+    <%#= f.hidden_field :user_id, { :value => session[:user_id] } %>
+    <%= f.submit t("menu.save"), :disable_with => t("menu.save") %>
+  </p>
+<% end %>
+
+<br />
+
+<span class="menu">
+  <%= link_to t("menu.list"), { :action => "index" } %>
+</span>

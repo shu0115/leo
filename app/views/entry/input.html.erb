@@ -1,0 +1,57 @@
+<%# ユーザ情報入力 %>
+<% form_for :user, :url => { :controller => "entry", :action => "input" } do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :login_id, "*ログインID" %><br />
+    <%= f.text_field :login_id, :value => @user.login_id, :class => "input_field_width_200" %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.label :password, "*パスワード" %><br />
+    <%= f.password_field :password, :value => @user.password, :class => "input_field_width_200" %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.label :password_confirmation, "*パスワード確認" %><br />
+    <%= f.password_field :password_confirmation, :value => @user.password_confirmation, :class => "input_field_width_200" %>
+  </p>
+  
+  <br />
+  
+  <p>
+    <%= f.label :nickname, "ニックネーム" %><br />
+    <%= f.text_field :nickname, :value => @user.nickname, :class => "input_field_width_200" %>
+  </p>
+  
+  <br />
+
+  <p>
+    <%= f.label :full_name, "フルネーム" %><br />
+    <%= f.text_field :full_name, :value => @user.full_name, :class => "input_field_width_200" %>
+  </p>
+  
+  <br />
+
+  <p>
+    <%= f.label :icon, "アイコン" %><br />
+    <%= f.text_field :icon, :value => @user.icon, :class => "input_field_width_200" %>
+  </p>
+  
+  <br />
+
+  <p>
+    <%= f.label :mail_address, "メールアドレス" %><br />
+    <%= f.text_field :mail_address, :value => @user.mail_address, :class => "input_field_width_200" %>
+  </p>
+  
+  <br />
+
+  <p>
+    <%= f.submit "確認", :disable_with => "確認" %>
+  </p>
+<% end %>

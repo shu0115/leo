@@ -1,0 +1,64 @@
+<%= render :partial => "menu" %>
+
+<%# カテゴリリスト %>
+<% unless @skills.blank? %>
+<div class="radius_border category">
+<table>
+  <tr>
+    <td>
+    <% @skills.each_with_index{ |skill, index| %>
+      <% if skill.name.to_s == params[:skill_name].to_s %>
+        <span class="active_link"><%= link_to skill.name, { :action => "skill_level", :skill_id => skill.id, :skill_name => skill.name } -%><wbr /></span>
+      <% else %>
+        <%= link_to skill.name, { :action => "skill_level", :skill_id => skill.id, :skill_name => skill.name } -%><wbr />
+      <% end %>
+    <% } %>
+    <br />
+    </td>
+  </tr>
+</table>
+</div>
+
+<br />
+<br />
+<% end %>
+
+<%# ページング %>
+<%= will_paginate @user_skills, :previous_label => 'Prev', :next_label => 'Next', :params => { :action => "skill_level" } %><br />
+
+<table border="0">
+  <tr>
+    <th><%= t("user_skill.level") %></th>
+    <th><%= t("user.icon") %></th>
+    <th><%= t("user.nickname") %></th>
+    <th><%= t("user.full_name") %></th>
+    <th><br /></th>
+  </tr>
+
+  <% @user_skills.each do |user_skill| %>
+  <tr class="top_line">
+    <td align="center"><%=h user_skill.level %></td>
+    <td><%= image_tag user_skill.user.icon, :size => t("user.profile_size"), :alt => t("user.icon_alt") %></td>
+    <td><%=h user_skill.user.nickname %></td>
+    <td><%=h user_skill.user.full_name %></td>
+    <td class="menu">
+    <% if Profile.show_ok?( { :user => @self_user, :profile => user_skill.user.profile }, t("user.status_ok") ) %>
+      <%= link_to 'プロフィール', { :controller => "profiles", :action => "show", :user_id => user_skill.user.id } %>
+    <% end %>
+    </td>
+  </tr>
+  <% end %>
+
+  <tr class="top_line">
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+<%# ページング %>
+<%= will_paginate @user_skills, :previous_label => 'Prev', :next_label => 'Next', :params => { :action => "skill_level" } %>
+
+<br />

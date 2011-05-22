@@ -1,0 +1,35 @@
+
+<%# ユーザスキル設定 %>
+<% form_for :skill_list, :url => { :action => "update" } do |f| %>
+  <%= f.error_messages %>
+
+  <table>
+    <th><%= t("skill.name") %></th>
+    <th><%= t("user_skill.level") %></th>
+    <% @skills.each do |skill| %>
+    <tr>
+      <th align="left"><%= skill.name %></th>
+      <td align="right"><%= f.select skill.id, 0.upto(10), :selected => UserSkill.get_level( :user_id => session[:user_id], :skill_id => skill.id) %></td>
+    </tr>
+    <% end %>
+  </table>
+  
+  <br />
+
+  <p>
+    <%= f.submit t("menu.save"), :disable_with => t("menu.save") unless @skills.blank? %>
+  </p>
+<% end %>
+
+<%# メッセージ表示 %>
+<% unless flash[:skill_notice].blank? %>
+  <br />
+  <p style="color: green"><%= flash[:skill_notice] %></p>
+<% end %>
+
+<br />
+
+<%# メニュー %>
+<span class="menu">
+  <%= link_to t("menu.top"), :root %>
+</span>

@@ -1,0 +1,29 @@
+
+<% form_for :forum, :url => { :action => "create" } do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :title, t("forum.title") %><br />
+    <%= f.text_field :title, :class => "input_field_width_200" %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.label :contents, t("forum.contents") %><br />
+    <%= f.text_area :contents %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.submit t("menu.create"), :disable_with => t("menu.create") %>
+  </p>
+<% end %>
+
+<br />
+<br />
+
+<span class="menu">
+  <%= link_to t("menu.list"), { :action => "index" } %>
+</span>

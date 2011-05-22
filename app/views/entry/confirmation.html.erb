@@ -1,0 +1,38 @@
+<%# ユーザ情報確認 %>
+<% form_for :user, :url => { :controller => "entry", :action => "complete" } do |f| %>
+  <%= f.error_messages %>
+
+  <%= f.label :login_id, "ログインID" %>：<%= @user.login_id %>
+  <%= f.hidden_field :login_id, :value => @user.login_id %><br />
+
+  <%= f.label :password, "パスワード" %>：<% @user.password.length.times{ |index| %>*<% } %>
+  <%= f.hidden_field :password, :value => @user.password %><br />
+
+  <%= f.label :nickname, "ニックネーム" %>：<%= @user.nickname %>
+  <%= f.hidden_field :nickname, :value => @user.nickname %><br />
+
+  <%= f.label :full_name, "フルネーム" %>：<%= @user.full_name %>
+  <%= f.hidden_field :full_name, :value => @user.full_name %><br />
+
+  <%= f.label :icon, "アイコン" %>：<%= @user.icon %>
+  <%= f.hidden_field :icon, :value => @user.icon %><br />
+
+  <%= f.label :mail_address, "メールアドレス" %>：<%= @user.mail_address %>
+  <%= f.hidden_field :mail_address, :value => @user.mail_address %><br />
+
+  <br />
+
+  <%= f.submit "登録", :disable_with => "登録" %>
+<% end %>
+
+<% form_for :user, :url => { :controller => "entry", :action => "input" } do |f| %>
+  <%= f.hidden_field :login_id, :value => @user.login_id %>
+  <%= f.hidden_field :password, :value => @user.password %>
+  <%= f.hidden_field :nickname, :value => @user.nickname %>
+  <%= f.hidden_field :full_name, :value => @user.full_name %>
+  <%= f.hidden_field :icon, :value => @user.icon %>
+  <%= f.hidden_field :mail_address, :value => @user.mail_address %>
+  <%= f.submit "戻る", :disable_with => "戻る" %>
+<% end %>
+
+<br />

@@ -1,0 +1,32 @@
+
+<% unless @forum.blank? %>
+  <table>
+    <tr>
+      <th align="left"><%= t("forum.title") %></th>
+      <td><%= @forum.title %></td>
+    </tr>
+    
+    <tr>
+      <th align="left"><%= t("forum.latest_comment_at") %></th>
+      <td><%= @forum.latest_comment_at.strftime("%Y/%m/%d %H:%M") unless @forum.latest_comment_at.blank? %></td>
+    </tr>
+    
+    <tr>
+      <th align="left"><%= t("forum.contents") %></th>
+      <td><%= @forum.contents %></td>
+    </tr>
+  </table>
+  
+  <br />
+  
+  <span class="menu">
+    <%= link_to t("menu.list"), { :action => "index" } %>
+    <%= link_to t("menu.edit"), { :action => "edit", :id => @forum.id } %>
+  </span>
+  
+  <br />
+<% else %>
+  <span class="menu">
+    <%= link_to t("menu.list"), { :action => "index" } %>
+  </span>
+<% end %>

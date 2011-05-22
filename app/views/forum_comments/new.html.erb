@@ -1,0 +1,23 @@
+
+<% form_for :forum_comment, :url => { :action => "create" } do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :comment, t("forum_comment.comment") %><br />
+    <%= f.text_area :comment %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.hidden_field :forum_id, { :value => params[:forum_id] } %>
+    <%= f.submit t("menu.create"), :disable_with => t("menu.create") %>
+  </p>
+<% end %>
+
+<br />
+<br />
+
+<span class="menu">
+  <%= link_to t("menu.list"), { :action => "index", :forum_id => params[:forum_id] } %>
+</span>

@@ -1,0 +1,45 @@
+
+/* テーブル枠線確認用 */
+td, th {
+  border: 0px solid #aaa;
+}
+
+.top_line td {
+  border-top: 1px solid #eee;
+}
+
+.float_left{
+  float: left;
+  margin-left: 1%;
+  margin-right: 1%;
+}
+
+.top_area{
+  border: 0px solid #aaa;
+  width: 100%;
+  padding: 0px;
+}
+
+.info_area{
+  width: 31%;
+}
+
+.input_field_width_230 {
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border: 1px solid #aaa;
+  width: 230px;
+  padding: 5px;
+}
+
+.input_field_width_500 {
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border: 1px solid #aaa;
+  width: 500px;
+  padding: 5px;
+}
+
+.icon{
+  width: 30px;
+}

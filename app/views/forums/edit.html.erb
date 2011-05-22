@@ -1,0 +1,72 @@
+<% if false %>
+<h1>Editing forum</h1>
+
+<% form_for(@forum) do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :user_id %><br />
+    <%= f.text_field :user_id %>
+  </p>
+  <p>
+    <%= f.label :title %><br />
+    <%= f.text_field :title %>
+  </p>
+  <p>
+    <%= f.label :contents %><br />
+    <%= f.text_area :contents %>
+  </p>
+  <p>
+    <%= f.label :latest_comment_at %><br />
+    <%= f.datetime_select :latest_comment_at %>
+  </p>
+  <p>
+    <%= f.label :mode %><br />
+    <%= f.text_field :mode %>
+  </p>
+  <p>
+    <%= f.submit 'Update' %>
+  </p>
+<% end %>
+
+<%= link_to 'Show', @forum %> |
+<%= link_to 'Back', forums_path %>
+<% end %>
+
+
+
+
+
+
+
+
+
+<% form_for :forum, :url => { :action => "update", :id => @forum.id } do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :title, t("forum.title") %><br />
+    <%= f.text_field :title, :class => "input_field_width_200" %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.label :contents, t("forum.contents") %><br />
+    <%= f.text_area :contents %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.submit t("menu.save"), :disable_with => t("menu.save") %>
+  </p>
+<% end %>
+
+<br />
+<br />
+
+<span class="menu">
+  <%= link_to t("menu.list"), { :action => "index" } %>
+  <%= link_to t("menu.show"), { :action => "show", :id => @forum.id } %>
+</span>

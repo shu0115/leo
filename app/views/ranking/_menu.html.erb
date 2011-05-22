@@ -1,0 +1,6 @@
+
+<center class="menu">
+  <span class="<%= 'now_page' if params[:action] == 'guild_rank' %>"><%= link_to t("ranking.guild_rank"), { :action => "guild_rank" } %></span>
+  <span class="<%= 'now_page' if params[:action] == 'skill_level' %>"><%= link_to t("ranking.skill_level"), { :action => "skill_level" } %></span>
+</center>
+<br />

@@ -1,0 +1,165 @@
+
+<span class="menu">
+  <%= link_to t("menu.top"), :root %>
+  <%= link_to "プロフィール", { :controller => "profiles", :action => "show", :user_id => params[:user_id] } %>
+</span
+
+<br />
+<br />
+<br />
+
+<%# ギルドランク %>
+<%= t("user.guild_rank") %>：<br />
+
+<% unless @user.blank? %>
+  <table>
+    <th colspan="2"><%= t("guild_rank.user") %></th>
+    <th><%= t("user.rank") %></th>
+    <th><%= t("guild_rank.keep") %></th>
+    <th><%= t("guild_rank.up") %></th>
+    <th><%= t("guild_rank.down") %></th>
+    <th></th>
+    
+    <tr>
+      <%# ユーザ %>
+      <td style="width: 30px;">
+        <%= image_tag @user.icon, :size => t("user.profile_size"), :alt => t("user.icon_alt") %>
+      </td>
+      <td>
+        <%= @user.nickname %>／<%= @user.full_name %>
+      </td>
+      
+      <%# ランク %>
+      <td align="right"><%= @user.rank %></td>
+      
+      <%# 現状承認リスト %>
+      <td>
+        <% @guild_ranks_keep.each{ |keep| %>
+          <%= link_to image_tag( keep.user.icon, :size => t("user.profile_size"), :alt => t("user.icon_alt"), :title => keep.user.nickname ), { :controller => "profiles", :action => "show", :user_id => keep.user.id }, :target => "_blank" %>
+        <% } %>
+      </td>
+
+      <%# 上方要求リスト %>
+      <td>
+        <% @guild_ranks_up.each{ |up| %>
+          <%= link_to image_tag( up.user.icon, :size => t("user.profile_size"), :alt => t("user.icon_alt"), :title => up.user.nickname ), { :controller => "profiles", :action => "show", :user_id => up.user.id }, :target => "_blank" %>
+        <% } %>
+      </td>
+
+      <%# 下方要求リスト %>
+      <td>
+        <% @guild_ranks_down.each{ |down| %>
+          <%= link_to image_tag( down.user.icon, :size => t("user.profile_size"), :alt => t("user.icon_alt"), :title => down.user.nickname ), { :controller => "profiles", :action => "show", :user_id => down.user.id }, :target => "_blank" %>
+        <% } %>
+      </td>
+      
+      <%# ギルドランク承認ボタン %>
+      <td>
+        <% form_for :guild_rank, :url => { :action => "update", :user_id => session[:user_id], :target_user_id => params[:user_id] } do |f| %>
+          <%= f.error_messages %>
+          
+          <%= f.hidden_field :rank, { :value => @user.rank } %>
+          <%= f.hidden_field :user_id, { :value => session[:user_id] } %>
+          <%= f.hidden_field :target_user_id, { :value => params[:user_id] } %>
+          
+          <%= f.submit t("guild_rank.keep"), :disable_with => t("guild_rank.keep"), :disabled => @guild_rank.approval == t("guild_rank.keep") %>
+          <%= f.submit t("guild_rank.up"), :disable_with => t("guild_rank.up"), :disabled => @guild_rank.approval == t("guild_rank.up") %>
+          <%= f.submit t("guild_rank.down"), :disable_with => t("guild_rank.down"), :disabled => @guild_rank.approval == t("guild_rank.down") %>
+        <% end %>
+      </td>
+    </tr>
+  </table>
+<% end %>
+
+<br />
+
+<%# スキルレベル %>
+<%= t("user.skill_level") %>：<br />
+
+<table>
+  <tr>
+    <th><%= t("skill.name") %></th>
+    <th><%= t("user_skill.level") %></th>
+    <th><%= t("skill_level.keep") %></th>
+    <th><%= t("skill_level.up") %></th>
+    <th><%= t("skill_level.down") %></th>
+    <th></th>
+
+    <% @user_skills.each do |user_skill| %>
+      <% unless user_skill.level == 0 %>
+        <tr class="top_line">
+          <%# スキル名 %>
+          <td align="left"><%= user_skill.skill.name unless user_skill.skill.blank? %></td>
+          
+          <%# スキルレベル %>
+          <td align="right"><%= user_skill.level %></td>
+          
+          <%# 現状承認 %>
+          <td>
+            <%# 現状承認リスト取得 %>
+            <% skill_levels_keep = SkillLevel.all_by_args_and_order_include( { :target_user_id => user_skill.user_id, :skill_id => user_skill.skill_id, :approval => t("skill_level.keep"), :level => user_skill.level }, "updated_at ASC", "user" ) %>
+            <% skill_levels_keep.each{ |keep| %>
+              <%= link_to image_tag( keep.user.icon, :size => t("user.profile_size"), :alt => t("user.icon_alt"), :title => keep.user.nickname ), { :controller => "profiles", :action => "show", :user_id => keep.user.id }, :target => "_blank" %>
+            <% } %>
+          </td>
+          
+          <%# 上方要求 %>
+          <td>
+            <%# 上方要求リスト取得 %>
+            <% skill_levels_up = SkillLevel.all_by_args_and_order_include( { :target_user_id => user_skill.user_id, :skill_id => user_skill.skill_id, :approval => t("skill_level.up"), :level => user_skill.level }, "updated_at ASC", "user" ) %>
+            <% skill_levels_up.each{ |up| %>
+              <%= link_to image_tag( up.user.icon, :size => t("user.profile_size"), :alt => t("user.icon_alt"), :title => up.user.nickname ), { :controller => "profiles", :action => "show", :user_id => up.user.id }, :target => "_blank" %>
+            <% } %>
+          </td>
+          
+          <%# 下方要求 %>
+          <td>
+            <%# 下方要求リスト取得 %>
+            <% skill_levels_down = SkillLevel.all_by_args_and_order_include( { :target_user_id => user_skill.user_id, :skill_id => user_skill.skill_id, :approval => t("skill_level.down"), :level => user_skill.level }, "updated_at ASC", "user" ) %>
+            <% skill_levels_down.each{ |down| %>
+              <%= link_to image_tag( down.user.icon, :size => t("user.profile_size"), :alt => t("user.icon_alt"), :title => down.user.nickname ), { :controller => "profiles", :action => "show", :user_id => down.user.id }, :target => "_blank" %>
+            <% } %>
+          </td>
+          
+          <%# スキルレベル承認ボタン %>
+          <td>
+            <% skill_level = SkillLevel.find_by_args( :user_id => session[:user_id], :target_user_id => params[:user_id], :skill_id => user_skill.skill_id, :level => user_skill.level ) %>
+            <% skill_level = SkillLevel.new if skill_level.blank? %>
+
+            <%# スキルレベル承認フォーム %>
+            <% form_for :skill_level, :url => { :action => "skill_level_update", :user_id => session[:user_id], :target_user_id => params[:user_id] } do |f| %>
+              <%= f.error_messages %>
+ 
+              <%= f.hidden_field :level, { :value => user_skill.level } %>
+              <%= f.hidden_field :user_id, { :value => session[:user_id] } %>
+              <%= f.hidden_field :target_user_id, { :value => params[:user_id] } %>
+              <%= f.hidden_field :skill_id, { :value => user_skill.skill_id } %>
+            
+              <%= f.submit t("skill_level.keep"), :disable_with => t("skill_level.keep"), :disabled => skill_level.approval == t("skill_level.keep") %>
+              <%= f.submit t("skill_level.up"), :disable_with => t("skill_level.up"), :disabled => skill_level.approval == t("skill_level.up") %>
+              <%= f.submit t("skill_level.down"), :disable_with => t("skill_level.down"), :disabled => skill_level.approval == t("skill_level.down") %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+  </tr>
+
+  <tr class="top_line">
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+<br />
+
+<span class="menu">
+  <%= link_to t("menu.top"), :root %>
+  <%= link_to t("main_menu.profile"), { :controller => "profiles", :action => "show", :user_id => params[:user_id] } %>
+</span>
+
+<br />

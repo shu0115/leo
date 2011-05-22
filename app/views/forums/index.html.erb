@@ -1,0 +1,44 @@
+
+<%# ページング %>
+<%= will_paginate @forums, :previous_label => 'Prev', :next_label => 'Next', :params => { :action => "index" } %><br />
+
+<table>
+  <tr>
+    <th><%= t("forum.title") %></th>
+    <th><%= t("forum.latest_comment_at") %></th>
+    <th><br /></th>
+    <th><br /></th>
+    <th><br /></th>
+    <th><br /></th>
+  </tr>
+
+  <% @forums.each do |forum| %>
+  <tr class="top_line">
+    <td><%=h forum.title %></td>
+    <td><%=h forum.latest_comment_at.strftime("%Y/%m/%d %H:%M") unless forum.latest_comment_at.blank? %></td>
+    <td class="menu"><%= link_to t("forum_comment.comment"), { :controller => "forum_comments", :forum_id => forum.id } %></td>
+    <td class="menu"><%= link_to t("menu.show"), { :action => "show", :id => forum.id } %></td>
+    <td class="menu"><%= link_to t("menu.edit"), { :action => "edit", :id => forum.id } %></td>
+    <td class="menu"><%= link_to t("menu.delete"), { :action => "destroy", :id => forum.id }, :confirm => '本当に削除してよろしいですか？', :method => :delete %></td>
+  </tr>
+  <% end %>
+
+  <tr class="top_line">
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+<%# ページング %>
+<%= will_paginate @forums, :previous_label => 'Prev', :next_label => 'Next', :params => { :action => "index" } %><br />
+
+<br />
+
+<span class="menu">
+  <%= link_to t("menu.top"), :root %>
+  <%= link_to t("menu.new"), { :action => "new" } %>
+</span>

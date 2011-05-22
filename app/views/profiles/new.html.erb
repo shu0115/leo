@@ -1,0 +1,106 @@
+
+<% form_for :profile, :url => { :action => "create" } do |f| %>
+  <%= f.error_messages %>
+
+  <p>
+    <%= f.label :sex, t("profile.sex") %><br />
+    <%= f.select :sex, $sex_array, :selected => @profile.sex %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.label :birth_day, t("profile.birth_day") %><br />
+    <%= f.date_select :birth_day, :use_month_numbers => true, :start_year => (Time.now.year - 100), :end_year => Time.now.year %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.label :blood_type, t("profile.blood_type") %><br />
+    <%= f.select :blood_type, $blood_type_array, :selected => @profile.blood_type %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.label :constellation, t("profile.constellation") %><br />
+    <%= f.select :constellation, $constellation_array, :selected => @profile.constellation %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.label :home, t("profile.home") %><br />
+    <%= f.text_field :home, :value => @profile.home, :class => "input_field_width_200" %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.label :residence, t("profile.residence") %><br />
+    <%= f.text_field :residence, :value => @profile.residence, :class => "input_field_width_200" %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.label :web_site, t("profile.web_site") %><br />
+    <%= f.text_field :web_site, :value => @profile.web_site, :class => "input_field_width_300" %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.label :twitter_id, t("profile.twitter_id") %><br />
+    <%= f.text_field :twitter_id, :value => @profile.twitter_id, :class => "input_field_width_200" %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.label :skype_id, t("profile.skype_id") %><br />
+    <%= f.text_field :skype_id, :value => @profile.skype_id, :class => "input_field_width_200" %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.label :paypal_link, t("profile.paypal_link") %><br />
+    <%= f.text_field :paypal_link, :value => @profile.paypal_link, :class => "input_field_width_200" %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.label :github_id, t("profile.github_id") %><br />
+    <%= f.text_field :github_id, :value => @profile.github_id, :class => "input_field_width_200" %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.label :lastfm_id, t("profile.lastfm_id") %><br />
+    <%= f.text_field :lastfm_id, :value => @profile.lastfm_id, :class => "input_field_width_200" %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.label :public_mode, t("profile.public_mode") %><br />
+    <%= f.select :public_mode, $public_mode_array, :selected => "OFF" %>
+  </p>
+
+  <br />
+  
+  <p>
+    <%= f.submit t("menu.create"), :disable_with => t("menu.create") %>
+  </p>
+<% end %>
+
+<br />
+<br />
+
+<span class="menu">
+  <%= link_to t("menu.back"), :root %>
+</span>

@@ -1,0 +1,41 @@
+<%= render :partial => "menu" %>
+
+<%# ページング %>
+<%= will_paginate @users, :previous_label => 'Prev', :next_label => 'Next', :params => { :action => "guild_rank" } %><br />
+
+<table border="0">
+  <tr>
+    <th><%= t("user.rank") %></th>
+    <th><%= t("user.icon") %></th>
+    <th><%= t("user.nickname") %></th>
+    <th><%= t("user.full_name") %></th>
+    <th><br /></th>
+  </tr>
+
+  <% @users.each do |user| %>
+  <tr class="top_line">
+    <td align="center"><%=h user.rank %></td>
+    <td><%= image_tag user.icon, :size => t("user.profile_size"), :alt => t("user.icon_alt") %></td>
+    <td><%=h user.nickname %></td>
+    <td><%=h user.full_name %></td>
+    <td class="menu">
+    <% if Profile.show_ok?( { :user => @self_user, :profile => user.profile }, t("user.status_ok") ) %>
+      <%= link_to 'プロフィール', { :controller => "profiles", :action => "show", :user_id => user.id } %>
+    <% end %>
+    </td>
+  </tr>
+  <% end %>
+
+  <tr class="top_line">
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+<%# ページング %>
+<%= will_paginate @users, :previous_label => 'Prev', :next_label => 'Next', :params => { :action => "guild_rank" } %>
+
+<br />

@@ -1,0 +1,17 @@
+# Read about fixtures at http://ar.rubyonrails.org/classes/Fixtures.html
+
+one:
+  user_id: 1
+  number: 1
+  name: MyString
+  character_content: MyText
+  numeric_content: 1
+  public_mode: MyString
+
+two:
+  user_id: 1
+  number: 1
+  name: MyString
+  character_content: MyText
+  numeric_content: 1
+  public_mode: MyString

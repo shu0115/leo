@@ -1,0 +1,173 @@
+
+<span class="menu">
+  <%= link_to t("menu.top"), :root %>
+</span
+
+<br />
+<br />
+<br />
+
+<% unless @user.blank? %>
+  <table>
+    <tr>
+      <td rowspan="5"><%= image_tag @user.icon, :size => t("user.icon_size"), :alt => t("user.icon_alt") %></td>
+    </tr>
+    
+    <tr>
+      <th align="left"><%= t("user.nickname") %></th>
+      <td><%= @user.nickname %></td>
+    </tr>
+    
+    <tr>
+      <th align="left"><%= t("user.full_name") %></th>
+      <td><%= @user.full_name %></td>
+    </tr>
+
+    <tr>
+      <th align="left"><%= t("user.mail_address") %></th>
+      <td><%= @user.mail_address %></td>
+    </tr>
+
+    <tr>
+      <th align="left"><%= t("user.rank") %></th>
+      <td>
+        <% if Profile.status_approval_ok?( session[:user_id], t("user.status_ok") ) %>
+          <%= link_to @user.rank.to_s, { :controller => "guild_ranks", :action => "show", :user_id => @user.id } %>
+        <% else %>
+          <%= @user.rank %>
+        <% end %>
+      </td>
+    </tr>
+
+    <% if @user.id == session[:user_id] %>
+    <tr>
+      <td colspan="4" class="menu"><%= link_to t("menu.edit"), { :controller => "entry", :action => "edit" } %></td>
+    </tr>
+    <% end %>
+  </table>
+
+  <br />
+<% end %>
+
+<% unless @profile.blank? %>
+  <table>
+    <tr>
+      <th align="left"><%= t("profile.approval_user_id") %></th>
+      <td>
+        <% approval_user = User.find_by_args( :id => @profile.approval_user_id ) %>
+        <%= link_to image_tag( approval_user.icon, :size => t("user.profile_size"), :alt => t("user.icon_alt"), :title => approval_user.nickname ), { :controller => "profiles", :action => "show", :user_id => approval_user.id }, :target => "_blank" unless approval_user.blank? %>
+      </td>
+    </tr>
+    
+    <tr>
+      <th align="left"><%= t("profile.sex") %></th>
+      <td><%= @profile.sex %></td>
+    </tr>
+    
+    <tr>
+      <th align="left"><%= t("profile.birth_day") %></th>
+      <td><%= @profile.birth_day.strftime("%Y/%m/%d") unless @profile.birth_day.blank? %></td>
+    </tr>
+    
+    <tr>
+      <th align="left"><%= t("profile.blood_type") %></th>
+      <td><%= @profile.blood_type %></td>
+    </tr>
+    
+    <tr>
+      <th align="left"><%= t("profile.constellation") %></th>
+      <td><%= @profile.constellation %></td>
+    </tr>
+    
+    <tr>
+      <th align="left"><%= t("profile.home") %></th>
+      <td><%= @profile.home %></td>
+    </tr>
+    
+    <tr>
+      <th align="left"><%= t("profile.residence") %></th>
+      <td><%= @profile.residence %></td>
+    </tr>
+    
+    <tr>
+      <th align="left"><%= t("profile.web_site") %></th>
+      <td><%= @profile.web_site %></td>
+    </tr>
+    
+    <tr>
+      <th align="left"><%= t("profile.twitter_id") %></th>
+      <td><%= @profile.twitter_id %></td>
+    </tr>
+    
+    <tr>
+      <th align="left"><%= t("profile.skype_id") %></th>
+      <td><%= @profile.skype_id %></td>
+    </tr>
+    
+    <tr>
+      <th align="left"><%= t("profile.paypal_link") %></th>
+      <td><%= @profile.paypal_link %></td>
+    </tr>
+    
+    <tr>
+      <th align="left"><%= t("profile.github_id") %></th>
+      <td><%= @profile.github_id %></td>
+    </tr>
+    
+    <tr>
+      <th align="left"><%= t("profile.lastfm_id") %></th>
+      <td><%= @profile.lastfm_id %></td>
+    </tr>
+
+    <tr>
+      <th align="left"><%= t("profile.public_mode") %></th>
+      <td><%= @profile.public_mode %></td>
+    </tr>
+
+    <% if @user.id == session[:user_id] %>
+    <tr>
+      <td colspan="2" class="menu"><%= link_to t("menu.edit"), { :action => "edit", :id => @profile.id } %></td>
+    </tr>
+    <% end %>
+  </table>
+
+  <br />
+<% end %>
+
+<% unless @user_skills.blank? %>
+  <table>
+    <tr>
+      <th align="left"><%= t("skill.name") %></th>
+      <th align="left"><%= t("user_skill.level") %></th>
+    </tr>
+    
+    <% @user_skills.each do |user_skill| %>
+      <% unless user_skill.level == 0 %>
+        <tr>
+          <td align="left"><%= user_skill.skill.name unless user_skill.skill.blank? %></td>
+          <td align="right">
+            <% if Profile.status_approval_ok?( session[:user_id], t("user.status_ok") ) %>
+              <%= link_to user_skill.level.to_s, { :controller => "guild_ranks", :action => "show", :user_id => @user.id } %>
+            <% else %>
+              <%= user_skill.level %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    <% end %>
+    
+    <% if @user.id == session[:user_id] %>
+    <tr>
+      <td colspan="2" class="menu"><%= link_to t("menu.edit"), { :controller => "user_skills" } %></td>
+    </tr>
+    <% end %>
+  </table>
+
+  <br />
+<% end %>
+
+<span class="menu">
+  <%= link_to t("menu.top"), :root %>
+</span>
+
+<br />

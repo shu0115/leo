@@ -1,0 +1,81 @@
+
+<div class="top_area">
+
+<%# フォーラム %>
+<table class="float_left info_area">
+  <tr>
+    <th align="center" colspan="2"><%= link_to t("main_menu.forum"), { :controller => "forums" } %></th>
+  </tr>
+
+  <% @forums.each do |forum| %>
+  <tr class="top_line">
+    <td><%= link_to forum.title, { :controller => "forum_comments", :action => "index", :forum_id => forum.id }, :target => "_blank" %> (<%=h forum.comment_count.to_i %>)</td>
+    <td align="right" style="width: 100px; white-space: nowrap;" title="<%=h forum.latest_comment_at.strftime("%Y/%m/%d %H:%M") unless forum.latest_comment_at.blank? %>"><%=h forum.latest_comment_at.strftime("%m/%d %H:%M") unless forum.latest_comment_at.blank? %></td>
+  </tr>
+  <% end %>
+  
+  <tr class="top_line">
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+<%# ラウンジ %>
+<% form_for :lounge, :url => { :action => "post" } do |f| %>
+<table class="float_left info_area">
+  <tr>
+    <th align="center" colspan="3"><%= link_to t("main_menu.lounge"), { :controller => "lounges" } %></th>
+  </tr>
+  
+  <tr>
+    <td style="white-space: nowrap;" colspan="3">
+      <%= f.text_field :message, :class => "input_field_width_230" %>
+      <%= f.submit t("lounge.post"), :disable_with => t("lounge.post") %>
+    </td>
+  </tr>
+
+  <% @lounges.each do |lounge| %>
+  <tr class="top_line">
+    <td class="icon">
+      <%= link_to image_tag( lounge.user.icon, :size => t("user.profile_size"), :alt => t("user.icon_alt"), :title => lounge.user.nickname ), { :controller => "profiles", :action => "show", :user_id => lounge.user.id }, :target => "_blank" unless lounge.user.blank? %>
+    </td>
+
+    <td><%=h lounge.message %></td>
+    <td align="right" style="white-space: nowrap;" title="<%=h lounge.created_at.strftime("%Y/%m/%d %H:%M") %>"><%=h lounge.created_at.strftime("%m/%d %H:%M") %></td>
+  </tr>
+  <% end %>
+  
+  <tr class="top_line">
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+<% end %>
+
+<%# メンバー %>
+<table class="float_left info_area">
+  <tr>
+    <th align="center" colspan="3"><%= link_to t("main_menu.member"), { :controller => "member", :action => "list" } %></th>
+  </tr>
+
+  <% @users.each do |user| %>
+  <tr class="top_line">
+    <td class="icon"><%= link_to image_tag( user.icon, :size => t("user.profile_size"), :alt => t("user.icon_alt"), :title => user.nickname ), { :controller => "profiles", :action => "show", :user_id => user.id }, :target => "_blank" %></td>
+    <td><%= link_to user.nickname, { :controller => "profiles", :action => "show", :user_id => user.id }, :target => "_blank" %>／<%= link_to user.full_name, { :controller => "profiles", :action => "show", :user_id => user.id }, :target => "_blank" %><%#=h user.full_name %></td>
+    <td align="right" style="white-space: nowrap;" title="<%=h user.created_at.strftime("%Y/%m/%d %H:%M") %>"><%=h user.created_at.strftime("%m/%d %H:%M") %></td>
+  </tr>
+  <% end %>
+  
+  <tr class="top_line">
+    <td></td>
+    <td></td>
+    <td></td>
+  </tr>
+</table>
+
+<br />
+
+</div>
+
+<br />
